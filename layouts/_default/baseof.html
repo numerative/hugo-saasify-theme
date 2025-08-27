@@ -58,6 +58,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
     
+    <!-- AOS CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
     <!-- Main CSS -->
     {{ $css := resources.Get "css/main.css" }}
     {{ $css = $css | css.PostCSS }}
@@ -92,6 +95,16 @@
 
     <!-- Footer -->
     {{ partial "footer" . }}
+
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 400,
+            easing: 'ease-out-cubic',
+            once: true
+        });
+    </script>
 
     <!-- Mobile Menu Script -->
     <script>
