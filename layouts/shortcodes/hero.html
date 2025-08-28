@@ -18,7 +18,7 @@
     {{ end }}
     <div class="container pt-16 pb-20 md:pt-24 md:pb-28">
         <div class="grid lg:grid-cols-2 gap-12 items-center">
-            <div class="space-y-8" data-aos="fade-right" data-aos-delay="50">
+            <div class="space-y-8" data-aos="fade-up" data-aos-delay="50">
                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight" data-aos="fade-up" data-aos-delay="100">
                     {{ $headline | safeHTML }}
                 </h1>
@@ -38,15 +38,12 @@
                     {{ end }}
                 </div>
             </div>
-            <div class="relative" data-aos="fade-left" data-aos-delay="100">
+            <div class="relative" data-aos="fade-up" data-aos-delay="100">
                 {{ if $hero_image }}
                 <div class="relative z-10" data-aos="zoom-in" data-aos-delay="250">
                     <img src="{{ $hero_image | relURL }}" alt="Hero Image" class="mx-auto rounded-xl shadow-elevation">
                 </div>
                 {{ end }}
-                <!-- Background decoration -->
-                <div class="absolute -top-20 -right-20 w-64 h-64 bg-primary-100 rounded-full filter blur-3xl opacity-50" data-aos="fade" data-aos-delay="300"></div>
-                <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-secondary-100 rounded-full filter blur-3xl opacity-50" data-aos="fade" data-aos-delay="350"></div>
             </div>
         </div>
     </div>
