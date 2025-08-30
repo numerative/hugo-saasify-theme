@@ -2,7 +2,7 @@
 {{ $dropdownConfig := $headerConfig.menu.dropdown }}
 <div class="mobile-menu-wrapper">
     <input type="checkbox" id="nav-toggle" class="nav-toggle">
-    <header class="fixed w-full top-0 z-50 {{ with $headerConfig.background }}{{ . }}{{ else }}bg-white/80 backdrop-blur-sm{{ end }} {{ with $headerConfig.border }}{{ . }}{{ else }}border-b border-gray-100{{ end }}">
+    <header id="main-header" class="fixed w-full top-0 z-50 transition-transform duration-300 ease-in-out {{ with $headerConfig.background }}{{ . }}{{ else }}bg-white/80 backdrop-blur-sm{{ end }} {{ with $headerConfig.border }}{{ . }}{{ else }}border-b border-gray-100{{ end }}">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
             <nav class="flex items-center justify-between h-20">
                 <!-- Logo and Title -->
@@ -117,5 +117,57 @@
         .nav-toggle:checked ~ header .nav-content {
             display: block;
         }
+        
+        /* Header scroll animation styles - smooth transition handled by CSS */
     </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let lastScrollY = window.scrollY;
+            let ticking = false;
+            const header = document.getElementById('main-header');
+            const headerHeight = 80; // Height of the header (h-20 = 80px)
+            const maxScrollDistance = 200; // Distance over which header completely disappears
+            
+            function updateHeader() {
+                const scrollY = window.scrollY;
+                const isScrollingUp = scrollY < lastScrollY;
+                
+                if (scrollY <= 0) {
+                    // At the very top - header fully visible
+                    header.style.transform = 'translateY(0)';
+                } else if (isScrollingUp) {
+                    // Scrolling up - immediately show header
+                    header.style.transform = 'translateY(0)';
+                } else {
+                    // Scrolling down - proportional movement
+                    if (scrollY >= maxScrollDistance) {
+                        // Scrolled past max distance - header fully hidden
+                        header.style.transform = `translateY(-${headerHeight}px)`;
+                    } else {
+                        // Calculate proportional movement
+                        // scrollY from 0 to maxScrollDistance maps to 0 to -headerHeight
+                        const translateY = -(scrollY / maxScrollDistance) * headerHeight;
+                        header.style.transform = `translateY(${translateY}px)`;
+                    }
+                }
+                
+                lastScrollY = scrollY;
+                ticking = false;
+            }
+
+            function requestTick() {
+                if (!ticking) {
+                    requestAnimationFrame(updateHeader);
+                    ticking = true;
+                }
+            }
+
+            // Listen for scroll events
+            window.addEventListener('scroll', requestTick, { passive: true });
+            
+            // Initialize header state
+            updateHeader();
+        });
+    </script>
 </div>
