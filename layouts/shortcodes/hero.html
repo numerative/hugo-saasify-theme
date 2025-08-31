@@ -16,9 +16,9 @@
         <img src="{{ $background_image | relURL }}" alt="Background" class="w-full h-full object-cover">
     </div>
     {{ end }}
-    <div class="container pt-16 pb-20 md:pt-24 md:pb-28">
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
-            <div class="space-y-8" data-aos="fade-up" data-aos-delay="50">
+    <div class="container pt-16 md:pt-24">
+        <div class="flex flex-col lg:flex-row gap-12">
+            <div class="lg:flex-[3] space-y-8 pb-8 lg:self-start" data-aos="fade-up" data-aos-delay="50">
                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight" data-aos="fade-up" data-aos-delay="100">
                     {{ $headline | safeHTML }}
                 </h1>
@@ -38,10 +38,10 @@
                     {{ end }}
                 </div>
             </div>
-            <div class="relative" data-aos="fade-up" data-aos-delay="100">
+            <div class="lg:flex-[2] relative flex justify-center lg:self-end" data-aos="fade-up" data-aos-delay="100">
                 {{ if $hero_image }}
-                <div class="relative z-10" data-aos="zoom-in" data-aos-delay="250">
-                    <img src="{{ $hero_image | relURL }}" alt="Hero Image" class="mx-auto rounded-xl shadow-elevation">
+                <div class="relative z-10 w-full max-w-[470px]" data-aos="zoom-in" data-aos-delay="250">
+                    <img src="{{ $hero_image | relURL }}" alt="Hero Image" class="w-full h-auto rounded-xl shadow-elevation max-w-[470px]">
                 </div>
                 {{ end }}
             </div>
