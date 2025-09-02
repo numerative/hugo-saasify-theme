@@ -21,27 +21,27 @@
     <div class="space-y-6 {{ if eq $imagePosition "left" }}order-1 lg:order-2{{ end }}" data-aos="fade-up" data-aos-delay="50" data-aos-anchor="#{{ $uniqueId }}">
         <style>
             .badge {
-                background-color: color-mix(in srgb, var(--badge-color) 10%, transparent);
-                color: var(--badge-color);
+                background-color: color-mix(in srgb, var(--md-sys-color-secondary-container) 30%, transparent);
+                color: var(--md-sys-color-secondary);
             }
             .badge-icon {
-                color: var(--badge-color);
+                color: var(--md-sys-color-secondary);
             }
         </style>
         <div class="badge inline-block px-4 py-2 rounded-full font-medium" data-aos="fade-up" data-aos-delay="100" data-aos-anchor="#{{ $uniqueId }}">{{ $badge }}</div>
-        <h3 class="text-2xl md:text-3xl font-bold" data-aos="fade-up" data-aos-delay="150" data-aos-anchor="#{{ $uniqueId }}">{{ $title }}</h3>
-        <p class="text-lg text-gray-600" data-aos="fade-up" data-aos-delay="200" data-aos-anchor="#{{ $uniqueId }}">{{ $description }}</p>
+        <h3 class="text-2xl md:text-3xl font-bold" style="color: var(--md-sys-color-on-background);" data-aos="fade-up" data-aos-delay="150" data-aos-anchor="#{{ $uniqueId }}">{{ $title }}</h3>
+        <p class="text-lg" style="color: var(--md-sys-color-on-surface-variant);" data-aos="fade-up" data-aos-delay="200" data-aos-anchor="#{{ $uniqueId }}">{{ $description }}</p>
         <ul class="space-y-4" data-aos="fade-up" data-aos-delay="250" data-aos-anchor="#{{ $uniqueId }}">
             {{ range $index, $feature := $features }}
             <li class="flex items-center space-x-3" data-aos="fade-up" data-aos-delay="{{ add 300 (mul $index 50) }}" data-aos-anchor="#{{ $uniqueId }}">
                 <svg class="badge-icon w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                 </svg>
-                <span>{{ $feature | default "" }}</span>
+                <span style="color: var(--md-sys-color-on-surface);">{{ $feature | default "" }}</span>
             </li>
             {{ end }}
         </ul>
-        <a href="{{ $buttonLink }}" class="btn-primary inline-block" data-aos="fade-up" data-aos-delay="450" data-aos-anchor="#{{ $uniqueId }}">{{ $buttonText }}</a>
+        <a href="{{ $buttonLink }}" class="btn inline-block" style="background-color: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container);" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'" data-aos="fade-up" data-aos-delay="450" data-aos-anchor="#{{ $uniqueId }}">{{ $buttonText }}</a>
     </div>
 
     {{ if ne $imagePosition "left" }}
