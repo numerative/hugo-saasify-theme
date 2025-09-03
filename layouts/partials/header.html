@@ -49,7 +49,7 @@
                     {{ end }}
                     
                     {{ with $headerConfig.buttons.getStarted }}
-                    <a href="{{ .url | default "#" }}" class="{{ with .class }}{{ . }}{{ else }}inline-flex items-center justify-center px-6 py-3 rounded-lg font-bold transition duration-200 ease-in-out hover:scale-105{{ end }}" style="background-color: var(--md-sys-color-secondary); color: var(--md-sys-color-on-secondary);">
+                    <a href="{{ .url | default "#" }}" class="{{ with .class }}{{ . }}{{ else }}inline-flex items-center justify-center px-6 py-3 rounded-lg font-bold transition duration-200 ease-in-out hover:scale-105{{ end }}" style="background-color: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary);">
                         {{ .text | default "Get Started" }}
                     </a>
                     {{ end }}
@@ -94,7 +94,7 @@
                     {{ end }}
                     
                     {{ with $headerConfig.buttons.getStarted }}
-                    <a href="{{ .url | default "#" }}" class="{{ with .mobileClass }}{{ . }}{{ else }}block text-center px-6 py-3 rounded-lg font-bold transition duration-200 ease-in-out hover:scale-105{{ end }}" style="background-color: var(--md-sys-color-secondary); color: var(--md-sys-color-on-secondary);">
+                    <a href="{{ .url | default "#" }}" class="{{ with .mobileClass }}{{ . }}{{ else }}block text-center px-6 py-3 rounded-lg font-bold transition duration-200 ease-in-out hover:scale-105{{ end }}" style="background-color: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary);">
                         {{ .text | default "Get Started" }}
                     </a>
                     {{ end }}
