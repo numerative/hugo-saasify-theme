@@ -19,12 +19,21 @@
                     {{ range .Site.Menus.main }}
                         {{ if .Params.has_submenu }}
                         <div class="relative group">
+                            {{ if .URL }}
+                            <a href="{{ .URL }}" class="flex items-center dropdown-btn {{ with $headerConfig.menu.linkClass }}{{ . }}{{ else }}text-base font-bold transition duration-200{{ end }}">
+                                {{ .Name }}
+                                <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </a>
+                            {{ else }}
                             <button class="flex items-center dropdown-btn {{ with $headerConfig.menu.linkClass }}{{ . }}{{ else }}text-base font-bold transition duration-200{{ end }}">
                                 {{ .Name }}
                                 <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </button>
+                            {{ end }}
                             <div class="absolute left-0 mt-2 {{ $dropdownConfig.width | default "w-72" }} opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 ease-in-out">
                                 <div class="dropdown-container {{ $dropdownConfig.container_padding | default "py-6" }} {{ $dropdownConfig.shadow | default "shadow-xl" }} {{ $dropdownConfig.radius | default "rounded-lg" }}">
                                     {{ range .Params.submenu }}
@@ -73,7 +82,11 @@
                 {{ range .Site.Menus.main }}
                     {{ if .Params.has_submenu }}
                     <div class="py-2">
+                        {{ if .URL }}
+                        <a href="{{ .URL }}" class="mobile-submenu-title text-xl font-bold mb-2 block">{{ .Name }}</a>
+                        {{ else }}
                         <div class="mobile-submenu-title text-xl font-bold mb-2">{{ .Name }}</div>
+                        {{ end }}
                         <div class="pl-4">
                             {{ range .Params.submenu }}
                             <a href="{{ .url }}" class="mobile-submenu-link block py-2">{{ .name }}</a>

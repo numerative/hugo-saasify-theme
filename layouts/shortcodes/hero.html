@@ -13,7 +13,7 @@
 <section class="relative overflow-hidden" {{ if not $background_image }}{{ if $gradient_from }}style="background:linear-gradient({{ $gradient_angle }}deg,{{ $gradient_from }},{{ $gradient_to | default $gradient_from }})"{{ else }}style="background-color: var(--md-sys-color-background);"{{ end }}{{ end }}>
     {{ if $background_image }}
     <div class="absolute inset-0">
-        <img src="{{ $background_image | relURL }}" alt="Background" class="w-full h-full object-cover opacity-30 brightness-80">
+        <img src="{{ $background_image | relURL }}" alt="Background" class="w-full h-full object-cover opacity-15 brightness-60">
     </div>
     {{ if $gradient_from }}
     <div class="absolute inset-0 z-10" style="background:linear-gradient({{ $gradient_angle }}deg,{{ $gradient_from }},{{ $gradient_to | default $gradient_from }})"></div>
@@ -25,7 +25,7 @@
                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight" style="color: var(--md-sys-color-on-background);" data-aos="fade-up" data-aos-delay="100">
                     {{ $headline | safeHTML }}
                 </h1>
-                <p class="text-xl" style="color: var(--md-sys-color-on-surface-variant);" data-aos="fade-up" data-aos-delay="150">
+                <p class="text-xl font-bold" style="color: var(--md-sys-color-on-surface-variant);" data-aos="fade-up" data-aos-delay="150">
                     {{ $sub_headline | safeHTML }}
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4" data-aos="fade-up" data-aos-delay="200">
