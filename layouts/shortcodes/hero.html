@@ -44,7 +44,19 @@
             <div class="lg:flex-[2] relative flex justify-center lg:self-end" data-aos="fade-up" data-aos-delay="100">
                 {{ if $hero_image }}
                 <div class="relative z-10 w-full max-w-[470px]" data-aos="zoom-in" data-aos-delay="250">
-                    <img src="{{ $hero_image | relURL }}" alt="Hero Image" class="w-full h-auto rounded-xl shadow-elevation max-w-[470px]">
+                    {{ $heroImageResource := resources.Get $hero_image }}
+                    {{ if $heroImageResource }}
+                        {{ $mobileImage := $heroImageResource.Resize "380x380 q90" }}
+                        {{ $desktopImage := $heroImageResource.Resize "467x467 q90" }}
+                        <picture>
+                            <source media="(max-width: 768px)" srcset="{{ $mobileImage.RelPermalink }}">
+                            <source media="(min-width: 769px)" srcset="{{ $desktopImage.RelPermalink }}">
+                            <img src="{{ $desktopImage.RelPermalink }}" alt="Hero Image" class="w-full h-auto rounded-xl shadow-elevation max-w-[470px]">
+                        </picture>
+                    {{ else }}
+                        <!-- Fallback for external images -->
+                        <img src="{{ $hero_image | relURL }}" alt="Hero Image" class="w-full h-auto rounded-xl shadow-elevation max-w-[470px]">
+                    {{ end }}
                 </div>
                 {{ end }}
             </div>

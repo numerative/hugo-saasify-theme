@@ -77,7 +77,42 @@
     <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet"></noscript>
     
     <!-- AOS CSS - Completely defer loading -->
-    <!-- AOS CSS and JS will be loaded completely asynchronously after page load -->
+    <!-- Modern CSS-only scroll animations - no JavaScript library needed -->
+    <style>
+        /* Base styles for scroll animations */
+        [data-aos] {
+            opacity: 0;
+            transition: opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                       transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        /* Animation variants */
+        [data-aos="fade-up"] { transform: translateY(30px); }
+        [data-aos="fade-right"] { transform: translateX(-30px); }
+        [data-aos="zoom-in"] { transform: scale(0.9); }
+        
+        /* Animated state */
+        [data-aos].aos-animate {
+            opacity: 1;
+            transform: translateY(0) translateX(0) scale(1);
+        }
+        
+        /* Even faster animations on mobile */
+        @media (max-width: 768px) {
+            [data-aos] {
+                transition-duration: 0.2s;
+            }
+        }
+        
+        /* Respect user preferences */
+        @media (prefers-reduced-motion: reduce) {
+            [data-aos] {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+        }
+    </style>
 
     <!-- Main CSS -->
     {{ $css := resources.Get "css/main.css" }}
@@ -225,55 +260,52 @@
     <!-- Footer -->
     {{ partial "footer" . }}
 
-    <!-- AOS - Completely deferred loading with combined CSS+JS -->
+    <!-- Modern ES6+ Scroll Animations - No transpiling needed -->
     <script>
-        // Combined AOS loader - CSS first, then JS, then init
-        function loadAOSComplete() {
-            // Load CSS first
-            const cssLink = document.createElement('link');
-            cssLink.rel = 'stylesheet';
-            cssLink.href = 'https://unpkg.com/aos@2.3.1/dist/aos.css';
-            
-            // Load JS after CSS
-            cssLink.onload = function() {
-                const script = document.createElement('script');
-                script.src = 'https://unpkg.com/aos@2.3.1/dist/aos.js';
-                script.onload = function() {
-                    // Initialize AOS when browser is idle
-                    if ('requestIdleCallback' in window) {
-                        requestIdleCallback(initAOS);
-                    } else {
-                        setTimeout(initAOS, 100);
-                    }
-                };
-                document.head.appendChild(script);
-            };
-            
-            document.head.appendChild(cssLink);
-        }
+        class ModernScrollAnimations {
+            constructor() {
+                // Skip if user prefers reduced motion
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+                
+                this.elements = document.querySelectorAll('[data-aos]');
+                this.observer = null;
+                this.init();
+            }
 
-        function initAOS() {
-            if (typeof AOS !== 'undefined') {
-                requestAnimationFrame(function() {
-                    AOS.init({
-                        duration: window.innerWidth < 768 ? 200 : 400,
-                        easing: 'ease-out-cubic',
-                        once: true,
-                        disable: function() {
-                            return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            init() {
+                if (this.elements.length === 0) return;
+
+                const options = {
+                    threshold: 0,
+                    rootMargin: '0px 0px 100px 0px'
+                };
+
+                this.observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const delay = entry.target.dataset.aosDelay || 0;
+                            
+                            setTimeout(() => {
+                                entry.target.classList.add('aos-animate');
+                            }, parseInt(delay));
+                            
+                            // Once animated, stop observing (once: true behavior)  
+                            this.observer.unobserve(entry.target);
                         }
                     });
+                }, options);
+
+                this.elements.forEach(element => {
+                    this.observer.observe(element);
                 });
             }
         }
 
-        // Load AOS only after page is completely loaded - not critical path
-        if (document.readyState === 'complete') {
-            setTimeout(loadAOSComplete, 500);
+        // Initialize when DOM is ready - modern, non-blocking
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => new ModernScrollAnimations());
         } else {
-            window.addEventListener('load', function() {
-                setTimeout(loadAOSComplete, 500);
-            });
+            new ModernScrollAnimations();
         }
     </script>
 
