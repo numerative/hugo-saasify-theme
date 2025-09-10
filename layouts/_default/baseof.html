@@ -226,12 +226,12 @@
                 // Batch DOM reads/writes to prevent forced reflow
                 requestAnimationFrame(function() {
                     AOS.init({
-                        duration: 400,
+                        duration: window.innerWidth < 768 ? 200 : 400, // Faster animations on mobile
                         easing: 'ease-out-cubic',
                         once: true,
                         disable: function() {
-                            // Disable AOS on very small screens to reduce reflows
-                            return window.innerWidth < 768;
+                            // Respect user motion preferences
+                            return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
                         }
                     });
                 });
