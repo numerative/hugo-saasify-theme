@@ -137,7 +137,8 @@
         "@id": "{{ .Site.BaseURL }}#organization",
         "name": "{{ .Site.Title }}",
         "url": "{{ .Site.BaseURL }}",
-        "description": "{{ .Site.Params.description }}"{{ with .Site.Params.logo }},
+        "description": "{{ .Site.Params.description }}",
+        "slogan": "Empowering Global Trade"{{ with .Site.Params.logo }},
         "logo": {
             "@type": "ImageObject",
             "url": "{{ . | absURL }}",
@@ -169,7 +170,18 @@
         "contactPoint": {
             "@type": "ContactPoint",
             "contactType": "customer service",
-            "availableLanguage": ["English", "Hindi", "Gujarati"]
+            "availableLanguage": ["English", "Hindi", "Gujarati"],
+            {{- with .Site.Params.contact.phone -}}
+            "telephone": "{{ . }}",
+            {{- end -}}
+            {{- with .Site.Params.contact.email -}}
+            "email": "{{ . }}"
+            {{- end -}}
+        },
+        "availableLanguage": ["English", "Hindi", "Gujarati"],
+        "areaServed": {
+            "@type": "City",
+            "name": "Rajkot"
         }
     }
     </script>
@@ -188,6 +200,7 @@
         "publisher": {
             "@id": "{{ .Site.BaseURL }}#organization"
         },
+        "inLanguage": ["en", "hi", "gu"],
         "potentialAction": {
             "@type": "SearchAction",
             "target": {
@@ -199,40 +212,66 @@
     }
     </script>
 
-    <!-- Structured Data for Sitelinks -->
+    <!-- Structured Data for Site Navigation -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "ItemList",
-        "name": "{{ .Site.Title }} - Main Pages",
-        "description": "Main sections of {{ .Site.Title }} website",
-        "itemListElement": [
+        "@type": "SiteNavigationElement",
+        "@id": "{{ .Site.BaseURL }}#main-navigation",
+        "name": "Main Navigation",
+        "url": "{{ .Site.BaseURL }}",
+        "isPartOf": {
+            "@type": "WebSite",
+            "@id": "{{ .Site.BaseURL }}#website",
+            "name": "{{ .Site.Title }}",
+            "url": "{{ .Site.BaseURL }}"
+        },
+        "hasPart": [
+            {{- $aboutPage := .Site.GetPage "/about" -}}
             {
-                "@type": "ListItem",
+                "@type": "SiteNavigationElement",
+                "@id": "{{ .Site.BaseURL }}about/",
                 "position": 1,
                 "name": "About Us",
-                "description": "Learn about Yashraj Exim Academy and our expertise in export-import training",
+                {{- with $aboutPage.Description -}}
+                "description": "{{ . }}",
+                {{- end -}}
                 "url": "{{ .Site.BaseURL }}about/"
             },
+            {{- $servicesPage := .Site.GetPage "/services" -}}
             {
-                "@type": "ListItem",
+                "@type": "SiteNavigationElement",
+                "@id": "{{ .Site.BaseURL }}services/",
                 "position": 2,
                 "name": "Services",
-                "description": "Export-import courses and training services offered by Yashraj Exim Academy",
+                {{- with $servicesPage.Description -}}
+                "description": "{{ . }}",
+                {{- end -}}
                 "url": "{{ .Site.BaseURL }}services/"
             },
+            {{- $contactPage := .Site.GetPage "/contact" -}}
             {
-                "@type": "ListItem",
+                "@type": "SiteNavigationElement",
+                "@id": "{{ .Site.BaseURL }}contact/",
                 "position": 3,
                 "name": "Contact",
-                "description": "Contact Yashraj Exim Academy for export-import training inquiries",
+                {{- with $contactPage.Description -}}
+                "description": "{{ . }}",
+                {{- end -}}
                 "url": "{{ .Site.BaseURL }}contact/"
             },
             {
-                "@type": "ListItem",
+                "@type": "SiteNavigationElement",
+                "@id": "{{ .Site.BaseURL }}blog/",
                 "position": 4,
+                {{- with .Site.Params.blog.title -}}
+                "name": "{{ . }}",
+                {{- else -}}
                 "name": "Blog",
-                "description": "Latest insights and tips on export-import business and international trade",
+                {{- end -}}
+                {{- with .Site.Params.blog.subtitle -}}
+                "description": "{{ . }}",
+                {{- end -}}
                 "url": "{{ .Site.BaseURL }}blog/"
             }
         ]
