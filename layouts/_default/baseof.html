@@ -118,10 +118,43 @@
     {
         "@context": "https://schema.org",
         "@type": "Organization",
+        "@id": "{{ .Site.BaseURL }}#organization",
         "name": "{{ .Site.Title }}",
-        "url": "{{ .Site.BaseURL }}"{{ with .Site.Params.logo }},
-        "logo": "{{ . | absURL }}"{{ end }}{{ $social := slice }}{{ with .Site.Params.social.linkedin }}{{ $social = $social | append . }}{{ end }}{{ with .Site.Params.social.facebook }}{{ $social = $social | append . }}{{ end }}{{ with .Site.Params.social.youtube }}{{ $social = $social | append . }}{{ end }}{{ with .Site.Params.social.instagram }}{{ $social = $social | append . }}{{ end }}{{ with .Site.Params.social.twitter }}{{ $social = $social | append . }}{{ end }}{{ if gt (len $social) 0 }},
-        "sameAs": [{{ range $i, $url := $social }}{{ if $i }},{{ end }}"{{ $url }}"{{ end }}]{{ end }}
+        "url": "{{ .Site.BaseURL }}",
+        "description": "{{ .Site.Params.description }}"{{ with .Site.Params.logo }},
+        "logo": {
+            "@type": "ImageObject",
+            "url": "{{ . | absURL }}",
+            "width": "200",
+            "height": "60"
+        }{{ end }},
+        "sameAs": [
+            {{- $socialUrls := slice -}}
+            {{- with .Site.Params.social.facebook -}}
+                {{- $socialUrls = $socialUrls | append . -}}
+            {{- end -}}
+            {{- with .Site.Params.social.youtube -}}
+                {{- $socialUrls = $socialUrls | append . -}}
+            {{- end -}}
+            {{- with .Site.Params.social.instagram -}}
+                {{- $socialUrls = $socialUrls | append . -}}
+            {{- end -}}
+            {{- with .Site.Params.social.linkedin -}}
+                {{- $socialUrls = $socialUrls | append . -}}
+            {{- end -}}
+            {{- with .Site.Params.social.twitter -}}
+                {{- $socialUrls = $socialUrls | append . -}}
+            {{- end -}}
+            {{- range $index, $url := $socialUrls -}}
+                {{- if $index -}},{{- end -}}
+                "{{ $url }}"
+            {{- end -}}
+        ],
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "customer service",
+            "availableLanguage": ["English", "Hindi", "Gujarati"]
+        }
     }
     </script>
 
@@ -131,42 +164,60 @@
     {
         "@context": "https://schema.org",
         "@type": "WebSite",
+        "@id": "{{ .Site.BaseURL }}#website",
         "name": "{{ .Site.Title }}",
         "alternateName": "{{ .Site.Params.homeTitle }}",
         "url": "{{ .Site.BaseURL }}",
-        "mainEntity": {
-            "@type": "Organization",
-            "name": "{{ .Site.Title }}"
+        "description": "{{ .Site.Params.description }}",
+        "publisher": {
+            "@id": "{{ .Site.BaseURL }}#organization"
         },
-        "about": {
-            "@type": "Thing",
-            "name": "Export Import Training",
-            "description": "{{ .Site.Params.description }}"
-        },
-        "hasPart": [
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "{{ .Site.BaseURL }}search?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+
+    <!-- Structured Data for Sitelinks -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "{{ .Site.Title }} - Main Pages",
+        "description": "Main sections of {{ .Site.Title }} website",
+        "itemListElement": [
             {
-                "@type": "WebPage",
+                "@type": "ListItem",
+                "position": 1,
                 "name": "About Us",
-                "url": "{{ .Site.BaseURL }}about/",
-                "description": "Learn about Yashraj Exim Academy and our expertise in export-import training"
+                "description": "Learn about Yashraj Exim Academy and our expertise in export-import training",
+                "url": "{{ .Site.BaseURL }}about/"
             },
             {
-                "@type": "WebPage", 
+                "@type": "ListItem",
+                "position": 2,
                 "name": "Services",
-                "url": "{{ .Site.BaseURL }}services/",
-                "description": "Export-import courses and training services offered by Yashraj Exim Academy"
+                "description": "Export-import courses and training services offered by Yashraj Exim Academy",
+                "url": "{{ .Site.BaseURL }}services/"
             },
             {
-                "@type": "WebPage",
+                "@type": "ListItem",
+                "position": 3,
                 "name": "Contact",
-                "url": "{{ .Site.BaseURL }}contact/",
-                "description": "Contact Yashraj Exim Academy for export-import training inquiries"
+                "description": "Contact Yashraj Exim Academy for export-import training inquiries",
+                "url": "{{ .Site.BaseURL }}contact/"
             },
             {
-                "@type": "WebPage",
+                "@type": "ListItem",
+                "position": 4,
                 "name": "Blog",
-                "url": "{{ .Site.BaseURL }}blog/",
-                "description": "Latest insights and tips on export-import business and international trade"
+                "description": "Latest insights and tips on export-import business and international trade",
+                "url": "{{ .Site.BaseURL }}blog/"
             }
         ]
     }
