@@ -113,23 +113,15 @@
         {{ end }}
     {{ end }}
 
-    <!-- Structured Data for Organization with Sitelinks -->
+    <!-- Structured Data for Organization -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "{{ .Site.Title }}",
         "url": "{{ .Site.BaseURL }}"{{ with .Site.Params.logo }},
-        "logo": "{{ . | absURL }}"{{ end }}{{ $social := slice }}{{ with .Site.Params.social.linkedin }}{{ $social = $social | append . }}{{ end }}{{ with .Site.Params.social.facebook }}{{ $social = $social | append . }}{{ end }}{{ with .Site.Params.social.youtube }}{{ $social = $social | append . }}{{ end }}{{ with .Site.Params.social.instagram }}{{ $social = $social | append . }}{{ end }}{{ with .Site.Params.social.twitter }}{{ $social = $social | append . }}{{ end }}{{ if $social }},
-        "sameAs": {{ $social | jsonify }}{{ end }},
-        "potentialAction": {
-            "@type": "SearchAction",
-            "target": {
-                "@type": "EntryPoint",
-                "urlTemplate": "{{ .Site.BaseURL }}search?q={search_term_string}"
-            },
-            "query-input": "required name=search_term_string"
-        }
+        "logo": "{{ . | absURL }}"{{ end }}{{ $social := slice }}{{ with .Site.Params.social.linkedin }}{{ $social = $social | append . }}{{ end }}{{ with .Site.Params.social.facebook }}{{ $social = $social | append . }}{{ end }}{{ with .Site.Params.social.youtube }}{{ $social = $social | append . }}{{ end }}{{ with .Site.Params.social.instagram }}{{ $social = $social | append . }}{{ end }}{{ with .Site.Params.social.twitter }}{{ $social = $social | append . }}{{ end }}{{ if gt (len $social) 0 }},
+        "sameAs": [{{ range $i, $url := $social }}{{ if $i }},{{ end }}"{{ $url }}"{{ end }}]{{ end }}
     }
     </script>
 
