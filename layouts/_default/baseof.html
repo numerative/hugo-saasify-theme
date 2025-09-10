@@ -119,11 +119,8 @@
     {{ $css = $css | css.PostCSS }}
     {{ if hugo.IsProduction }}
         {{ $css = $css | minify | fingerprint | resources.PostProcess }}
-        <link rel="preload" href="{{ $css.RelPermalink }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="{{ $css.RelPermalink }}"></noscript>
-    {{ else }}
-        <link rel="stylesheet" href="{{ $css.RelPermalink }}">
     {{ end }}
+    <link rel="stylesheet" href="{{ $css.RelPermalink }}">
 
     <!-- Additional Meta Tags from Front Matter -->
     {{ with .Params.customMeta }}
