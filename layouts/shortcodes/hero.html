@@ -13,7 +13,7 @@
 <section class="relative overflow-hidden" {{ if not $background_image }}{{ if $gradient_from }}style="background:linear-gradient({{ $gradient_angle }}deg,{{ $gradient_from }},{{ $gradient_to | default $gradient_from }})"{{ else }}style="background-color: var(--md-sys-color-background);"{{ end }}{{ end }}>
     {{ if $background_image }}
     <div class="absolute inset-0">
-        <img src="{{ $background_image | relURL }}" alt="Background" class="w-full h-full object-cover opacity-15 brightness-60">
+        <img src="{{ $background_image | relURL }}" alt="Background" class="w-full h-full object-cover opacity-15 brightness-60" fetchpriority="high" loading="eager">
     </div>
     {{ if $gradient_from }}
     <div class="absolute inset-0 z-10" style="background:linear-gradient({{ $gradient_angle }}deg,{{ $gradient_from }},{{ $gradient_to | default $gradient_from }})"></div>

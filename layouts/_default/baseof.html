@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#142341">
+    <meta name="color-scheme" content="light">
     
     <!-- Google Tag Manager -->
     {{ partial "google-tag-manager" . }}
@@ -11,7 +13,7 @@
     {{ partial "google-analytics" . }}
     
     <!-- Title -->
-    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+    <title>{{ if .IsHome }}{{ .Site.Params.homeTitle }} | {{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
     
     <!-- Meta Tags -->
     <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}">
@@ -53,13 +55,48 @@
     <!-- Canonical URL -->
     <link rel="canonical" href="{{ .Permalink }}">
     
-    <!-- Fonts -->
+    <!-- Preload LCP image for homepage hero background -->
+    {{ if .IsHome }}
+        {{ $content := .Content }}
+        {{ if (findRE `background_image="([^"]+)"` $content) }}
+            {{ $bgImage := index (findRE `background_image="([^"]+)"` $content) 0 }}
+            {{ $bgImagePath := replaceRE `background_image="([^"]+)"` "$1" $bgImage }}
+            <link rel="preload" href="{{ $bgImagePath | relURL }}" as="image" fetchpriority="high">
+        {{ end }}
+    {{ end }}
+    
+    <!-- Fonts - Break critical request chain by preloading font files directly -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://unpkg.com">
     
-    <!-- AOS CSS -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Preload critical font files directly to break request chain -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://fonts.gstatic.com/s/plusjakartasans/v7/LDIbaomQNQcsA88c7O9yZ4KMCoOg4IA6-91aHEjcWuA_KU50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2" as="font" type="font/woff2" crossorigin>
+    
+    <!-- Load font CSS asynchronously -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet"></noscript>
+    
+    <!-- AOS CSS - Completely defer loading -->
+    <script>
+        // Load AOS CSS only after critical resources
+        function loadAOSCSS() {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://unpkg.com/aos@2.3.1/dist/aos.css';
+            document.head.appendChild(link);
+        }
+        
+        // Load after page content is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+                setTimeout(loadAOSCSS, 100);
+            });
+        } else {
+            setTimeout(loadAOSCSS, 100);
+        }
+    </script>
 
     <!-- Main CSS -->
     {{ $css := resources.Get "css/main.css" }}
@@ -74,6 +111,74 @@
         {{ range . }}
         <meta {{ range $key, $value := . }} {{ $key }}="{{ $value }}"{{ end }}>
         {{ end }}
+    {{ end }}
+
+    <!-- Structured Data for Organization with Sitelinks -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "{{ .Site.Title }}",
+        "url": "{{ .Site.BaseURL }}"{{ with .Site.Params.logo }},
+        "logo": "{{ . | absURL }}"{{ end }}{{ $social := slice }}{{ with .Site.Params.social.linkedin }}{{ $social = $social | append . }}{{ end }}{{ with .Site.Params.social.facebook }}{{ $social = $social | append . }}{{ end }}{{ with .Site.Params.social.youtube }}{{ $social = $social | append . }}{{ end }}{{ with .Site.Params.social.instagram }}{{ $social = $social | append . }}{{ end }}{{ with .Site.Params.social.twitter }}{{ $social = $social | append . }}{{ end }}{{ if $social }},
+        "sameAs": {{ $social | jsonify }}{{ end }},
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "{{ .Site.BaseURL }}search?q={search_term_string}"
+            },
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+
+    <!-- Structured Data for Website with Sitelinks -->
+    {{ if .IsHome }}
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "{{ .Site.Title }}",
+        "alternateName": "{{ .Site.Params.homeTitle }}",
+        "url": "{{ .Site.BaseURL }}",
+        "mainEntity": {
+            "@type": "Organization",
+            "name": "{{ .Site.Title }}"
+        },
+        "about": {
+            "@type": "Thing",
+            "name": "Export Import Training",
+            "description": "{{ .Site.Params.description }}"
+        },
+        "hasPart": [
+            {
+                "@type": "WebPage",
+                "name": "About Us",
+                "url": "{{ .Site.BaseURL }}about/",
+                "description": "Learn about Yashraj Exim Academy and our expertise in export-import training"
+            },
+            {
+                "@type": "WebPage", 
+                "name": "Services",
+                "url": "{{ .Site.BaseURL }}services/",
+                "description": "Export-import courses and training services offered by Yashraj Exim Academy"
+            },
+            {
+                "@type": "WebPage",
+                "name": "Contact",
+                "url": "{{ .Site.BaseURL }}contact/",
+                "description": "Contact Yashraj Exim Academy for export-import training inquiries"
+            },
+            {
+                "@type": "WebPage",
+                "name": "Blog",
+                "url": "{{ .Site.BaseURL }}blog/",
+                "description": "Latest insights and tips on export-import business and international trade"
+            }
+        ]
+    }
+    </script>
     {{ end }}
 </head>
 <body class="min-h-screen flex flex-col light">
@@ -96,14 +201,49 @@
     <!-- Footer -->
     {{ partial "footer" . }}
 
-    <!-- AOS JS -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- AOS JS - Load and initialize after page is fully loaded -->
     <script>
-        AOS.init({
-            duration: 400,
-            easing: 'ease-out-cubic',
-            once: true
-        });
+        // Load AOS asynchronously to prevent blocking
+        function loadAOS() {
+            const script = document.createElement('script');
+            script.src = 'https://unpkg.com/aos@2.3.1/dist/aos.js';
+            script.onload = function() {
+                // Use requestIdleCallback to initialize AOS when browser is idle
+                if ('requestIdleCallback' in window) {
+                    requestIdleCallback(function() {
+                        initAOS();
+                    });
+                } else {
+                    // Fallback for browsers without requestIdleCallback
+                    setTimeout(initAOS, 100);
+                }
+            };
+            document.head.appendChild(script);
+        }
+
+        function initAOS() {
+            if (typeof AOS !== 'undefined') {
+                // Batch DOM reads/writes to prevent forced reflow
+                requestAnimationFrame(function() {
+                    AOS.init({
+                        duration: 400,
+                        easing: 'ease-out-cubic',
+                        once: true,
+                        disable: function() {
+                            // Disable AOS on very small screens to reduce reflows
+                            return window.innerWidth < 768;
+                        }
+                    });
+                });
+            }
+        }
+
+        // Load AOS after page content is loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadAOS);
+        } else {
+            loadAOS();
+        }
     </script>
 
     <!-- Mobile Menu Script -->
