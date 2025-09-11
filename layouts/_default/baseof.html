@@ -206,21 +206,14 @@
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "SiteNavigationElement",
+        "@type": "ItemList",
         "@id": "{{ .Site.BaseURL }}#main-navigation",
-        "name": "Main Navigation",
-        "url": "{{ .Site.BaseURL }}",
-        "isPartOf": {
-            "@type": "WebSite",
-            "@id": "{{ .Site.BaseURL }}#website",
-            "name": "{{ .Site.Title }}",
-            "url": "{{ .Site.BaseURL }}"
-        },
-        "hasPart": [
+        "name": "Site Navigation Menu",
+        "numberOfItems": 4,
+        "itemListElement": [
             {{- $aboutPage := .Site.GetPage "/about" -}}
             {
-                "@type": "SiteNavigationElement",
-                "@id": "{{ .Site.BaseURL }}about/",
+                "@type": "ListItem",
                 "position": 1,
                 "name": "About Us",
                 {{- with $aboutPage.Description -}}
@@ -230,8 +223,7 @@
             },
             {{- $servicesPage := .Site.GetPage "/services" -}}
             {
-                "@type": "SiteNavigationElement",
-                "@id": "{{ .Site.BaseURL }}services/",
+                "@type": "ListItem",
                 "position": 2,
                 "name": "Services",
                 {{- with $servicesPage.Description -}}
@@ -241,8 +233,7 @@
             },
             {{- $contactPage := .Site.GetPage "/contact" -}}
             {
-                "@type": "SiteNavigationElement",
-                "@id": "{{ .Site.BaseURL }}contact/",
+                "@type": "ListItem",
                 "position": 3,
                 "name": "Contact",
                 {{- with $contactPage.Description -}}
@@ -251,8 +242,7 @@
                 "url": "{{ .Site.BaseURL }}contact/"
             },
             {
-                "@type": "SiteNavigationElement",
-                "@id": "{{ .Site.BaseURL }}blog/",
+                "@type": "ListItem",
                 "position": 4,
                 {{- with .Site.Params.blog.title -}}
                 "name": "{{ . }}",
