@@ -170,7 +170,6 @@
         "contactPoint": {
             "@type": "ContactPoint",
             "contactType": "customer service",
-            "availableLanguage": ["English", "Hindi", "Gujarati"],
             {{- with .Site.Params.contact.phone -}}
             "telephone": "{{ . }}",
             {{- end -}}
@@ -178,7 +177,6 @@
             "email": "{{ . }}"
             {{- end -}}
         },
-        "availableLanguage": ["English", "Hindi", "Gujarati"],
         "areaServed": {
             "@type": "City",
             "name": "Rajkot"
@@ -200,15 +198,7 @@
         "publisher": {
             "@id": "{{ .Site.BaseURL }}#organization"
         },
-        "inLanguage": ["en", "hi", "gu"],
-        "potentialAction": {
-            "@type": "SearchAction",
-            "target": {
-                "@type": "EntryPoint",
-                "urlTemplate": "{{ .Site.BaseURL }}search?q={search_term_string}"
-            },
-            "query-input": "required name=search_term_string"
-        }
+        "inLanguage": ["en", "hi", "gu"]
     }
     </script>
 
