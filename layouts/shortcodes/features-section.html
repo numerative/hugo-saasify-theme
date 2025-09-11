@@ -6,7 +6,7 @@
     <div class="container">
         <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up" data-aos-delay="50">
             <h2 class="text-3xl md:text-4xl font-bold mb-6" style="color: var(--md-sys-color-on-background);" data-aos="fade-up" data-aos-delay="100">{{ $title }}</h2>
-            <p class="text-xl" style="color: var(--md-sys-color-on-surface-variant);" data-aos="fade-up" data-aos-delay="150">{{ $description }}</p>
+            <p class="text-xl" style="color: var(--md-sys-color-on-surface-variant);" data-aos="fade-up" data-aos-delay="150">{{ $description | safeHTML }}</p>
         </div>
 
         <!-- Feature Grid -->

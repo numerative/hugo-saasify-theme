@@ -8,7 +8,7 @@
 {{ $buttonLink := .Get "buttonLink" | default "#" }}
 {{ $imagePosition := .Get "imagePosition" | default "right" }}
 
-{{ $features := split (.Get "features") "," }}
+{{ $features := split (.Get "features") ";" }}
 
 {{ $uniqueId := printf "feature-%s-%d" (anchorize $title) (now.UnixNano) }}
 <div class="grid lg:grid-cols-2 gap-12 items-center" style="--badge-color: {{ $badgeColor }}" id="{{ $uniqueId }}">
@@ -42,14 +42,14 @@
         </style>
         <div class="badge inline-block px-4 py-2 rounded-full font-medium" data-aos="fade-up" data-aos-delay="100" data-aos-anchor="#{{ $uniqueId }}">{{ $badge }}</div>
         <h3 class="text-2xl md:text-3xl font-bold" style="color: var(--md-sys-color-on-background);" data-aos="fade-up" data-aos-delay="150" data-aos-anchor="#{{ $uniqueId }}">{{ $title }}</h3>
-        <p class="text-lg" style="color: var(--md-sys-color-on-surface-variant);" data-aos="fade-up" data-aos-delay="200" data-aos-anchor="#{{ $uniqueId }}">{{ $description }}</p>
+        <p class="text-lg" style="color: var(--md-sys-color-on-surface-variant);" data-aos="fade-up" data-aos-delay="200" data-aos-anchor="#{{ $uniqueId }}">{{ $description | safeHTML }}</p>
         <ul class="space-y-4" data-aos="fade-up" data-aos-delay="250" data-aos-anchor="#{{ $uniqueId }}">
             {{ range $index, $feature := $features }}
-            <li class="flex items-center space-x-3" data-aos="fade-up" data-aos-delay="{{ add 300 (mul $index 50) }}" data-aos-anchor="#{{ $uniqueId }}">
-                <svg class="badge-icon w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <li class="flex items-start space-x-3" data-aos="fade-up" data-aos-delay="{{ add 300 (mul $index 50) }}" data-aos-anchor="#{{ $uniqueId }}">
+                <svg class="badge-icon w-4 h-4 md:w-5 md:h-5 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                 </svg>
-                <span style="color: var(--md-sys-color-on-surface);">{{ $feature | default "" }}</span>
+                <span style="color: var(--md-sys-color-on-surface);">{{ $feature | default "" | safeHTML }}</span>
             </li>
             {{ end }}
         </ul>
