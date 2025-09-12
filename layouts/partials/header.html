@@ -7,18 +7,21 @@
             <nav class="flex items-center justify-between h-20">
                 <!-- Logo and Title -->
                 <a href="{{ .Site.BaseURL }}" class="flex items-center space-x-4">
-                    {{ with $headerConfig.logo }}
-                        {{ $logoResource := resources.Get .src }}
-                        {{ if $logoResource }}
-                            {{ $resizedLogo := $logoResource.Resize "250x48 q75" }}
-                            <img src="{{ $resizedLogo.RelPermalink }}" alt="{{ $.Site.Title }}" class="{{ with .class }}{{ . }}{{ else }}h-12{{ end }}">
+                    <div class="flex flex-col">
+                        {{ with $headerConfig.logo }}
+                            {{ $logoResource := resources.Get .src }}
+                            {{ if $logoResource }}
+                                {{ $resizedLogo := $logoResource.Resize "250x48 q75" }}
+                                <img src="{{ $resizedLogo.RelPermalink }}" alt="{{ $.Site.Title }}" class="{{ with .class }}{{ . }}{{ else }}h-12{{ end }}">
+                            {{ else }}
+                                <!-- Fallback for external images -->
+                                <img src="{{ .src | relURL }}" alt="{{ $.Site.Title }}" class="{{ with .class }}{{ . }}{{ else }}h-12{{ end }}">
+                            {{ end }}
                         {{ else }}
-                            <!-- Fallback for external images -->
-                            <img src="{{ .src | relURL }}" alt="{{ $.Site.Title }}" class="{{ with .class }}{{ . }}{{ else }}h-12{{ end }}">
+                            <span class="site-title text-3xl font-bold">{{ .Site.Title }}</span>
                         {{ end }}
-                    {{ else }}
-                        <span class="site-title text-3xl font-bold">{{ .Site.Title }}</span>
-                    {{ end }}
+                        <span class="header-tagline">Empowering Global Trade</span>
+                    </div>
                 </a>
 
                 <!-- Navigation -->
