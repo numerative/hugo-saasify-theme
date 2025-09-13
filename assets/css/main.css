@@ -2,6 +2,58 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --md-sys-color-primary: rgb(0 13 41);
+  --md-sys-color-surface-tint: rgb(80 94 127);
+  --md-sys-color-on-primary: rgb(255 255 255);
+  --md-sys-color-primary-container: rgb(20 35 65);
+  --md-sys-color-on-primary-container: rgb(124 139 174);
+  --md-sys-color-secondary: rgb(112 93 0);
+  --md-sys-color-on-secondary: rgb(255 255 255);
+  --md-sys-color-secondary-container: #c49848;
+  --md-sys-color-on-secondary-container: rgb(101 84 0);
+  --md-sys-color-tertiary: rgb(91 95 94);
+  --md-sys-color-on-tertiary: rgb(255 255 255);
+  --md-sys-color-tertiary-container: rgb(205 208 207);
+  --md-sys-color-on-tertiary-container: rgb(85 89 88);
+  --md-sys-color-error: rgb(186 26 26);
+  --md-sys-color-on-error: rgb(255 255 255);
+  --md-sys-color-error-container: rgb(255 218 214);
+  --md-sys-color-on-error-container: rgb(147 0 10);
+  --md-sys-color-background: rgb(251 248 252);
+  --md-sys-color-on-background: rgb(27 27 30);
+  --md-sys-color-surface: rgb(251 248 252);
+  --md-sys-color-on-surface: rgb(27 27 30);
+  --md-sys-color-surface-variant: rgb(225 226 235);
+  --md-sys-color-on-surface-variant: rgb(69 70 78);
+  --md-sys-color-outline: rgb(117 119 126);
+  --md-sys-color-outline-variant: rgb(197 198 206);
+  --md-sys-color-shadow: rgb(0 0 0);
+  --md-sys-color-scrim: rgb(0 0 0);
+  --md-sys-color-inverse-surface: rgb(48 48 51);
+  --md-sys-color-inverse-on-surface: rgb(242 240 243);
+  --md-sys-color-inverse-primary: rgb(184 198 236);
+  --md-sys-color-primary-fixed: rgb(217 226 255);
+  --md-sys-color-on-primary-fixed: rgb(11 27 56);
+  --md-sys-color-primary-fixed-dim: rgb(184 198 236);
+  --md-sys-color-on-primary-fixed-variant: rgb(56 70 102);
+  --md-sys-color-secondary-fixed: rgb(255 225 113);
+  --md-sys-color-on-secondary-fixed: rgb(34 27 0);
+  --md-sys-color-secondary-fixed-dim: rgb(226 197 86);
+  --md-sys-color-on-secondary-fixed-variant: rgb(85 70 0);
+  --md-sys-color-tertiary-fixed: rgb(224 227 226);
+  --md-sys-color-on-tertiary-fixed: rgb(24 28 28);
+  --md-sys-color-tertiary-fixed-dim: rgb(196 199 198);
+  --md-sys-color-on-tertiary-fixed-variant: rgb(68 71 71);
+  --md-sys-color-surface-dim: rgb(219 217 220);
+  --md-sys-color-surface-bright: rgb(251 248 252);
+  --md-sys-color-surface-container-lowest: rgb(255 255 255);
+  --md-sys-color-surface-container-low: rgb(245 243 246);
+  --md-sys-color-surface-container: rgb(239 237 240);
+  --md-sys-color-surface-container-high: rgb(234 231 234);
+  --md-sys-color-surface-container-highest: rgb(228 226 229);
+}
+
 @layer base {
   html {
     @apply scroll-smooth;
@@ -20,9 +72,30 @@
   .rounded-lg {
     border-radius: 2rem;
   }
+  
+  .about-gradient {
+    background: linear-gradient(180deg, color-mix(in srgb, var(--md-sys-color-surface-container-low) 30%, transparent), var(--md-sys-color-background)) !important;
+  }
 }
 
 @layer components {
+  .header-tagline {
+    color: var(--md-sys-color-secondary-container);
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.025em;
+    margin-top: 0.25rem;
+    padding-left: 58px;
+  }
+
+  .about-gradient {
+    background: linear-gradient(180deg, color-mix(in srgb, var(--md-sys-color-surface-container-low) 30%, transparent), var(--md-sys-color-background)) !important;
+  }
+
+  .contact-gradient {
+    background: linear-gradient(to bottom, #fffefb, #fffefb, white) !important;
+  }
+
   .cta-section {
     padding-top: 3rem;
     padding-bottom: 3rem;
@@ -31,7 +104,7 @@
   }
 
   .cta-gradient {
-    background: linear-gradient(calc(var(--gradient-angle) * 1deg), var(--gradient-from), var(--gradient-to));
+    background: var(--md-sys-color-secondary);
   }
 
   .btn {
@@ -40,7 +113,8 @@
   }
 
   .btn-primary {
-    @apply btn bg-primary-600 text-white hover:bg-primary-700 hover:scale-105;
+    @apply btn bg-primary-600 hover:bg-primary-700 hover:scale-105;
+    color: #fdf9ee;
   }
 
   .btn-secondary {
@@ -48,7 +122,16 @@
   }
 
   .btn-outline {
-    @apply btn border-2 border-primary-600 text-primary-600 hover:scale-105;
+    @apply btn border-2 hover:scale-105;
+    border-color: var(--md-sys-color-outline);
+    color: var(--md-sys-color-primary);
+    background-color: transparent;
+  }
+  
+  .btn-outline:hover {
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+    border-color: var(--md-sys-color-primary-container);
   }
 
   .container {
@@ -79,7 +162,8 @@
   }
 
   .prose h1, .prose h2, .prose h3, .prose h4 {
-    @apply font-heading font-bold text-gray-900;
+    @apply font-heading font-bold;
+    color: var(--md-sys-color-on-surface);
   }
 
   .prose h1 {
@@ -95,11 +179,17 @@
   }
 
   .prose p {
-    @apply text-gray-700 leading-relaxed mb-6;
+    @apply leading-relaxed mb-6;
+    color: var(--md-sys-color-on-surface-variant);
   }
 
   .prose a {
-    @apply text-primary-600 hover:text-primary-700 no-underline;
+    @apply no-underline;
+    color: var(--md-sys-color-primary);
+  }
+  
+  .prose a:hover {
+    color: var(--md-sys-color-on-primary-container);
   }
 
   .prose ul, .prose ol {
@@ -110,8 +200,14 @@
     @apply mb-2;
   }
 
+  .prose ul li::marker {
+    color: var(--md-sys-color-primary);
+  }
+
   .prose blockquote {
-    @apply border-l-4 border-gray-200 pl-4 italic text-gray-700 my-8;
+    @apply border-l-4 pl-4 italic my-8;
+    border-color: var(--md-sys-color-outline-variant);
+    color: var(--md-sys-color-on-surface-variant);
   }
 
   .prose img {
@@ -119,11 +215,14 @@
   }
 
   .prose code:not(pre code) {
-    @apply bg-gray-100 text-gray-900 px-1.5 py-0.5 rounded text-sm font-mono;
+    @apply px-1.5 py-0.5 rounded text-sm font-mono;
+    background-color: var(--md-sys-color-surface-container);
+    color: var(--md-sys-color-on-surface);
   }
 
   .table-of-contents {
-    @apply bg-gray-50 p-6 rounded-lg my-8;
+    @apply p-6 rounded-lg my-8;
+    background-color: var(--md-sys-color-surface-container-low);
   }
 
   .table-of-contents nav {
@@ -131,10 +230,20 @@
   }
 
   .table-of-contents a {
-    @apply text-gray-700 hover:text-primary-600 no-underline;
+    @apply no-underline;
+    color: var(--md-sys-color-on-surface-variant);
+  }
+  
+  .table-of-contents a:hover {
+    color: var(--md-sys-color-primary);
   }
 
   .table-of-contents ul {
     @apply list-none ml-4 space-y-2;
+  }
+
+  .highlight-marker {
+    color: var(--md-sys-color-secondary);
+    font-weight: 900;
   }
 }
