@@ -36,7 +36,6 @@ module.exports = {
     },
   },
   plugins: [
-    require('@tailwindcss/forms'),
-    require('@tailwindcss/typography'),
+    // Removed @tailwindcss/forms and @tailwindcss/typography to reduce CSS size
   ],
 }
