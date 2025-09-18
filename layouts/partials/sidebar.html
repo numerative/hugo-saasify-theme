@@ -58,7 +58,7 @@
             <div class="flex flex-wrap gap-2">
                 {{ range $name, $taxonomy := .Site.Taxonomies.categories }}
                     <a href="{{ "/categories/" | relLangURL }}{{ $name | urlize }}"
-                       class="inline-block px-3 py-1 text-sm font-medium rounded-full" style="color: var(--md-sys-color-on-primary-container); background-color: var(--md-sys-color-primary-container);" onmouseover="this.style.backgroundColor='var(--md-sys-color-primary)'; this.style.color='var(--md-sys-color-on-primary)'" onmouseout="this.style.backgroundColor='var(--md-sys-color-primary-container)'; this.style.color='var(--md-sys-color-on-primary-container)'">
+                       class="inline-block px-3 py-1 text-sm font-medium rounded-full" style="color: var(--md-sys-color-on-primary); background-color: var(--md-sys-color-primary-container);" onmouseover="this.style.backgroundColor='var(--md-sys-color-primary)'; this.style.color='var(--md-sys-color-on-primary)'" onmouseout="this.style.backgroundColor='var(--md-sys-color-primary-container)'; this.style.color='var(--md-sys-color-on-primary)'">
                         {{ $name }}
                         <span class="ml-1" style="color: var(--md-sys-color-outline);">({{ $taxonomy.Count }})</span>
                     </a>
