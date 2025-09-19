@@ -43,9 +43,12 @@
             </div>
             <div class="lg:flex-[2] relative flex justify-center lg:self-end" data-aos="fade-up" data-aos-delay="100">
                 {{ if $hero_image }}
+                {{ $image := resources.Get (strings.TrimPrefix "/" $hero_image) }}
+                {{ if $image }}
                 <div class="relative z-10 w-full max-w-[470px]" data-aos="zoom-in" data-aos-delay="250">
-                    <img src="{{ $hero_image | relURL }}" alt="Hero Image" class="w-full h-auto rounded-xl shadow-elevation max-w-[470px]">
+                    <img src="{{ $image.RelPermalink }}" alt="Hero Image" class="w-full h-auto rounded-xl shadow-elevation max-w-[470px]">
                 </div>
+                {{ end }}
                 {{ end }}
             </div>
         </div>
