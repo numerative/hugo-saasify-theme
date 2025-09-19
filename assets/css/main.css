@@ -79,6 +79,41 @@
 }
 
 @layer components {
+  /* Contact page mobile improvements */
+  .contact-form-section {
+    @apply p-8 lg:p-12;
+  }
+  
+  .contact-form-container {
+    @apply max-w-lg mx-auto lg:mx-0;
+  }
+  
+  /* Mobile-specific improvements for contact form */
+  @media (max-width: 640px) {
+    .contact-form-section {
+      @apply p-3;
+    }
+    
+    .contact-form-container {
+      @apply max-w-none mx-0 px-0;
+    }
+    
+    .contact-main-container {
+      @apply px-3;
+    }
+    
+    /* Ensure form inputs have proper mobile sizing */
+    .contact-form-section input,
+    .contact-form-section textarea,
+    .contact-form-section select {
+      @apply px-3 py-3;
+      font-size: 16px; /* Prevents zoom on iOS */
+    }
+    
+    .contact-form-section button {
+      @apply py-4 px-3 text-base;
+    }
+  }
   .header-tagline {
     color: var(--md-sys-color-secondary-container);
     font-size: 0.875rem;
