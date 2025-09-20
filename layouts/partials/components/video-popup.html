@@ -1,0 +1,83 @@
+<!-- Video Popup Modal -->
+<div id="videoModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-75 backdrop-blur-sm">
+    <div class="relative w-full max-w-4xl mx-4 md:mx-8">
+        <!-- Close Button -->
+        <button 
+            id="closeVideoModal" 
+            class="absolute -top-12 right-0 text-white hover:text-gray-300 transition-colors duration-200 z-10"
+            aria-label="Close video"
+        >
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+        
+        <!-- Video Container -->
+        <div class="relative bg-black rounded-lg overflow-hidden shadow-2xl" style="aspect-ratio: 16/9;">
+            <iframe 
+                id="videoIframe"
+                src=""
+                title="Video"
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen
+                class="w-full h-full"
+            ></iframe>
+        </div>
+    </div>
+</div>
+
+<!-- Video Popup JavaScript -->
+<script>
+(function() {
+    const videoModal = document.getElementById('videoModal');
+    const videoIframe = document.getElementById('videoIframe');
+    const closeBtn = document.getElementById('closeVideoModal');
+    
+    // Function to open video modal
+    window.openVideoModal = function(videoUrl) {
+        if (!videoUrl) return;
+        
+        // Extract video ID from YouTube URL and create embed URL
+        let videoId = '';
+        const youtubeRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+        const match = videoUrl.match(youtubeRegex);
+        
+        if (match && match[1]) {
+            videoId = match[1];
+            const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+            videoIframe.src = embedUrl;
+            videoModal.classList.remove('hidden');
+            videoModal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+    };
+    
+    // Function to close video modal
+    function closeVideoModal() {
+        videoModal.classList.add('hidden');
+        videoModal.classList.remove('flex');
+        videoIframe.src = '';
+        document.body.style.overflow = '';
+    }
+    
+    // Close button click handler
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeVideoModal);
+    }
+    
+    // Click outside modal to close
+    videoModal.addEventListener('click', function(e) {
+        if (e.target === videoModal) {
+            closeVideoModal();
+        }
+    });
+    
+    // Escape key to close
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !videoModal.classList.contains('hidden')) {
+            closeVideoModal();
+        }
+    });
+})();
+</script>
