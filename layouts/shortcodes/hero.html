@@ -37,7 +37,7 @@
                     {{ end }}
                     {{ if $secondary_button_text }}
                         {{ if $secondary_button_video }}
-                        <button onclick="openVideoModal('{{ $secondary_button_video }}')" class="btn text-center border-2 transform hover:-translate-y-0.5 transition duration-200 flex items-center gap-2" style="border-color: var(--md-sys-color-primary-container); background-color: var(--md-sys-color-on-primary); color: var(--md-sys-color-primary-container);">
+                        <button type="button" onclick="event.preventDefault(); return openVideoModal('{{ $secondary_button_video }}');" class="btn text-center border-2 transform hover:-translate-y-0.5 transition duration-200 flex items-center gap-2" style="border-color: var(--md-sys-color-primary-container); background-color: var(--md-sys-color-on-primary); color: var(--md-sys-color-primary-container);">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M6.3 2.841A1.5 1.5 0 004 4.11v11.78a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
                             </svg>
@@ -64,7 +64,3 @@
         </div>
     </div>
 </section>
-
-{{ if $secondary_button_video }}
-{{ partial "components/video-popup.html" . }}
-{{ end }}

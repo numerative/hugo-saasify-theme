@@ -16,9 +16,18 @@
                         </a>
                     {{ end }}
                     {{ with .Site.Params.cta.secondary_button }}
+                        {{ if .video }}
+                        <button type="button" onclick="event.preventDefault(); return openVideoModal('{{ .video }}');" class="btn border-2 border-white text-white hover:bg-primary-700 flex items-center gap-2 justify-center">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M6.3 2.841A1.5 1.5 0 004 4.11v11.78a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
+                            </svg>
+                            {{ .text }}
+                        </button>
+                        {{ else if .url }}
                         <a href="{{ .url }}" class="btn border-2 border-white text-white hover:bg-primary-700">
                             {{ .text }}
                         </a>
+                        {{ end }}
                     {{ end }}
                 </div>
             </div>

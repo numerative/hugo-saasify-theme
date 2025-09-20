@@ -30,54 +30,85 @@
 <!-- Video Popup JavaScript -->
 <script>
 (function() {
-    const videoModal = document.getElementById('videoModal');
-    const videoIframe = document.getElementById('videoIframe');
-    const closeBtn = document.getElementById('closeVideoModal');
-    
-    // Function to open video modal
-    window.openVideoModal = function(videoUrl) {
-        if (!videoUrl) return;
+    // Wait for DOM to be ready
+    function initVideoPopup() {
+        const videoModal = document.getElementById('videoModal');
+        const videoIframe = document.getElementById('videoIframe');
+        const closeBtn = document.getElementById('closeVideoModal');
         
-        // Extract video ID from YouTube URL and create embed URL
-        let videoId = '';
-        const youtubeRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
-        const match = videoUrl.match(youtubeRegex);
-        
-        if (match && match[1]) {
-            videoId = match[1];
-            const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
-            videoIframe.src = embedUrl;
-            videoModal.classList.remove('hidden');
-            videoModal.classList.add('flex');
-            document.body.style.overflow = 'hidden';
+        if (!videoModal || !videoIframe || !closeBtn) {
+            console.error('Video popup elements not found');
+            return;
         }
-    };
-    
-    // Function to close video modal
-    function closeVideoModal() {
-        videoModal.classList.add('hidden');
-        videoModal.classList.remove('flex');
-        videoIframe.src = '';
-        document.body.style.overflow = '';
+        
+        // Function to open video modal
+        window.openVideoModal = function(videoUrl) {
+            console.log('Opening video modal with URL:', videoUrl);
+            
+            if (!videoUrl) {
+                console.error('No video URL provided');
+                return false;
+            }
+            
+            // Extract video ID from YouTube URL and create embed URL
+            let videoId = '';
+            const youtubeRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+            const match = videoUrl.match(youtubeRegex);
+            
+            if (match && match[1]) {
+                videoId = match[1];
+                const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+                console.log('Setting iframe src to:', embedUrl);
+                videoIframe.src = embedUrl;
+                videoModal.classList.remove('hidden');
+                videoModal.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+                return true;
+            } else {
+                console.error('Could not extract YouTube video ID from:', videoUrl);
+                return false;
+            }
+        };
+        
+        // Function to close video modal
+        function closeVideoModal() {
+            console.log('Closing video modal');
+            videoModal.classList.add('hidden');
+            videoModal.classList.remove('flex');
+            videoIframe.src = '';
+            document.body.style.overflow = '';
+        }
+        
+        // Close button click handler
+        closeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            closeVideoModal();
+        });
+        
+        // Click outside modal to close
+        videoModal.addEventListener('click', function(e) {
+            if (e.target === videoModal) {
+                e.preventDefault();
+                closeVideoModal();
+            }
+        });
+        
+        // Escape key to close
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && !videoModal.classList.contains('hidden')) {
+                e.preventDefault();
+                closeVideoModal();
+            }
+        });
+        
+        console.log('Video popup initialized successfully');
     }
     
-    // Close button click handler
-    if (closeBtn) {
-        closeBtn.addEventListener('click', closeVideoModal);
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initVideoPopup);
+    } else {
+        initVideoPopup();
     }
-    
-    // Click outside modal to close
-    videoModal.addEventListener('click', function(e) {
-        if (e.target === videoModal) {
-            closeVideoModal();
-        }
-    });
-    
-    // Escape key to close
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && !videoModal.classList.contains('hidden')) {
-            closeVideoModal();
-        }
-    });
 })();
 </script>
