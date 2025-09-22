@@ -56,7 +56,7 @@
                 {{ $image := resources.Get (strings.TrimPrefix "/" $hero_image) }}
                 {{ if $image }}
                 <div class="relative z-10 w-full max-w-[470px]" data-aos="zoom-in" data-aos-delay="250">
-                    <img src="{{ $image.RelPermalink }}" alt="Hero Image" class="w-full h-auto rounded-xl shadow-elevation max-w-[470px]">
+                    <img src="{{ $image.RelPermalink }}" alt="Hero Image" class="w-full h-auto rounded-xl shadow-elevation max-w-[470px]" loading="eager" fetchpriority="high">
                 </div>
                 {{ end }}
                 {{ end }}

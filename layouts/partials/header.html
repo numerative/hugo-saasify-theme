@@ -12,10 +12,10 @@
                             {{ $logoResource := resources.Get .src }}
                             {{ if $logoResource }}
                                 {{ $resizedLogo := $logoResource.Resize "500x96 q80" }}
-                                <img src="{{ $resizedLogo.RelPermalink }}" alt="{{ $.Site.Title }}" class="{{ with .class }}{{ . }}{{ else }}h-12{{ end }}">
+                                <img src="{{ $resizedLogo.RelPermalink }}" alt="{{ $.Site.Title }}" class="{{ with .class }}{{ . }}{{ else }}h-12{{ end }}" fetchpriority="high">
                             {{ else }}
                                 <!-- Fallback for external images -->
-                                <img src="{{ .src | relURL }}" alt="{{ $.Site.Title }}" class="{{ with .class }}{{ . }}{{ else }}h-12{{ end }}">
+                                <img src="{{ .src | relURL }}" alt="{{ $.Site.Title }}" class="{{ with .class }}{{ . }}{{ else }}h-12{{ end }}" fetchpriority="high">
                             {{ end }}
                         {{ else }}
                             <span class="site-title text-3xl font-bold">{{ .Site.Title }}</span>

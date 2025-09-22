@@ -3,7 +3,7 @@
         {{ if .Get "image" }}
         {{ $image := resources.Get (strings.TrimPrefix "/" (.Get "image")) }}
         {{ if $image }}
-        <img src="{{ $image.RelPermalink }}" alt="{{ .Get "name" }}" class="w-full h-full object-cover">
+        <img src="{{ $image.RelPermalink }}" alt="{{ .Get "name" }}" class="w-full h-full object-cover" loading="lazy">
         {{ else }}
         <div class="w-full h-full flex items-center justify-center" style="background-color: var(--md-sys-color-surface-variant);">
             <svg class="w-20 h-20" style="color: var(--md-sys-color-on-surface-variant);" fill="currentColor" viewBox="0 0 24 24">

@@ -21,11 +21,11 @@
             <picture>
                 <source media="(max-width: 768px)" srcset="{{ $mobileImage.RelPermalink }}">
                 <source media="(min-width: 769px)" srcset="{{ $desktopImage.RelPermalink }}">
-                <img src="{{ $desktopImage.RelPermalink }}" alt="{{ $title }}" class="rounded-xl shadow-elevation">
+                <img src="{{ $desktopImage.RelPermalink }}" alt="{{ $title }}" class="rounded-xl shadow-elevation" loading="lazy">
             </picture>
         {{ else }}
             <!-- Fallback for external images -->
-            <img src="{{ $image | relURL }}" alt="{{ $title }}" class="rounded-xl shadow-elevation">
+            <img src="{{ $image | relURL }}" alt="{{ $title }}" class="rounded-xl shadow-elevation" loading="lazy">
         {{ end }}
     </div>
     {{ end }}
@@ -65,11 +65,11 @@
             <picture>
                 <source media="(max-width: 768px)" srcset="{{ $mobileImage.RelPermalink }}">
                 <source media="(min-width: 769px)" srcset="{{ $desktopImage.RelPermalink }}">
-                <img src="{{ $desktopImage.RelPermalink }}" alt="{{ $title }}" class="rounded-xl shadow-elevation">
+                <img src="{{ $desktopImage.RelPermalink }}" alt="{{ $title }}" class="rounded-xl shadow-elevation" loading="lazy">
             </picture>
         {{ else }}
             <!-- Fallback for external images -->
-            <img src="{{ $image | relURL }}" alt="{{ $title }}" class="rounded-xl shadow-elevation">
+            <img src="{{ $image | relURL }}" alt="{{ $title }}" class="rounded-xl shadow-elevation" loading="lazy">
         {{ end }}
     </div>
     {{ end }}
