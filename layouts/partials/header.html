@@ -11,7 +11,7 @@
                         {{ with $headerConfig.logo }}
                             {{ $logoResource := resources.Get .src }}
                             {{ if $logoResource }}
-                                {{ $resizedLogo := $logoResource.Resize "250x48 q75" }}
+                                {{ $resizedLogo := $logoResource.Resize "500x96 q80" }}
                                 <img src="{{ $resizedLogo.RelPermalink }}" alt="{{ $.Site.Title }}" class="{{ with .class }}{{ . }}{{ else }}h-12{{ end }}">
                             {{ else }}
                                 <!-- Fallback for external images -->
