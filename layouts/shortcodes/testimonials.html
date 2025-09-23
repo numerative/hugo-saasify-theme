@@ -1,9 +1,9 @@
 {{ $background_color := .Get "background-color" }}
-<section class="section{{ if not $background_color }} bg-gray-50{{ end }}" {{ if $background_color }}style="background-color:{{ $background_color }};"{{ end }}>
+<section class="section" style="{{ if $background_color }}background-color:{{ $background_color }};{{ else }}background-color: var(--md-sys-color-surface-container-low);{{ end }}">
     <div class="container">
         <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up" data-aos-delay="50">
             <h2 class="text-3xl md:text-4xl font-bold mb-6" data-aos="fade-up" data-aos-delay="100">{{ .Get "title" | default "Loved by Teams Worldwide" }}</h2>
-            <p class="text-xl text-gray-600" data-aos="fade-up" data-aos-delay="150">{{ .Get "description" | default "See what our customers have to say about their experience with our platform." }}</p>
+            <p class="text-xl" style="color: var(--md-sys-color-on-surface-variant);" data-aos="fade-up" data-aos-delay="150">{{ .Get "description" | default "See what our customers have to say about their experience with our platform." }}</p>
         </div>
 
         <div class="testimonials-container overflow-hidden" data-aos="fade-up" data-aos-delay="200">
@@ -14,10 +14,10 @@
                         <img src="{{ .avatar | relURL }}" alt="{{ .name }}" class="w-12 h-12 rounded-full" loading="lazy">
                         <div>
                             <h4 class="font-bold">{{ .name }}</h4>
-                            <p class="text-gray-600">{{ .title }}</p>
+                            <p class="" style="color: var(--md-sys-color-on-surface-variant);">{{ .title }}</p>
                         </div>
                     </div>
-                    <p class="text-gray-600">{{ .quote }}</p>
+                    <p class="" style="color: var(--md-sys-color-on-surface-variant);">{{ .quote }}</p>
                 </div>
                 {{ end }}
                 {{ if ne (.Get "animate" | default "true") "false" }}
@@ -27,10 +27,10 @@
                             <img src="{{ .avatar | relURL }}" alt="{{ .name }}" class="w-12 h-12 rounded-full" loading="lazy">
                             <div>
                                 <h4 class="font-bold">{{ .name }}</h4>
-                                <p class="text-gray-600">{{ .title }}</p>
+                                <p class="" style="color: var(--md-sys-color-on-surface-variant);">{{ .title }}</p>
                             </div>
                         </div>
-                        <p class="text-gray-600">{{ .quote }}</p>
+                        <p class="" style="color: var(--md-sys-color-on-surface-variant);">{{ .quote }}</p>
                     </div>
                     {{ end }}
                 {{ end }}
@@ -64,7 +64,7 @@
 .testimonial-card {
     flex: 0 0 auto;
     width: 300px;
-    background: white;
+    background: var(--md-sys-color-surface);
     padding: 2rem;
     border-radius: 0.5rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
