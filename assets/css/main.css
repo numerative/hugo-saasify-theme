@@ -244,7 +244,8 @@
   }
   
   .prose a:hover {
-    color: var(--md-sys-color-on-primary);
+    color: var(--md-sys-color-primary);
+    text-decoration: underline;
   }
 
   .prose ul, .prose ol {
