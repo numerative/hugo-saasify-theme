@@ -542,9 +542,19 @@
     transform: rotate(90deg);
   }
 
+  /* Ensure body transition works both ways (banner appear and dismiss) */
+  body {
+    transition: padding-top 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
   /* Push header down when banner is active */
   body.webinar-banner-active .fixed.top-0.z-50 {
     top: var(--webinar-banner-height) !important;
+  }
+
+  /* Add padding to body to prevent content from being hidden under banner */
+  body.webinar-banner-active {
+    padding-top: var(--webinar-banner-height);
   }
 
   /* Smooth header transition - add to existing transitions */
