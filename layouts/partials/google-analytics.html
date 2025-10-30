@@ -6,5 +6,49 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', '{{ .Site.Params.googleAnalytics }}');
+
+  /**
+   * Helper function to track lead generation
+   * @param {Object} data - Lead data
+   * @param {string} data.source - Lead source (e.g., 'webinar_banner', 'homepage_form')
+   * @param {string} data.event_name - Event/webinar name
+   * @param {string} data.event_date - Event date
+   * @param {string} data.category - Lead category (e.g., 'webinar', 'course', 'consultation')
+   */
+  window.trackLead = function(data) {
+    if (typeof gtag === 'undefined') return;
+
+    gtag('event', 'generate_lead', {
+      lead_source: data.source || 'unknown',
+      event_name: data.event_name || '',
+      event_date: data.event_date || '',
+      lead_category: data.category || 'webinar'
+    });
+  };
+
+  /**
+   * Helper function to track purchase/conversion
+   * @param {Object} data - Purchase data
+   * @param {string} data.transaction_id - Unique transaction ID
+   * @param {number} data.value - Purchase value in INR
+   * @param {string} data.currency - Currency code (default: 'INR')
+   * @param {string} data.item_name - Item/product name
+   * @param {string} data.item_id - Item/product ID
+   */
+  window.trackPurchase = function(data) {
+    if (typeof gtag === 'undefined') return;
+
+    gtag('event', 'purchase', {
+      transaction_id: data.transaction_id,
+      value: data.value,
+      currency: data.currency || 'INR',
+      items: [{
+        item_id: data.item_id || 'webinar_seat',
+        item_name: data.item_name || 'Export Import Mastery Webinar',
+        price: data.value,
+        quantity: 1
+      }]
+    });
+  };
 </script>
 {{ end }}
