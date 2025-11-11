@@ -565,4 +565,151 @@
   /* ============================================
      END TEMPORARY: Webinar Banner Styles
      ============================================ */
+
+  /* ============================================
+     Workshop Page Mobile Fixes
+     ============================================ */
+
+  /* Fix portrait container spacing on mobile */
+  @media (max-width: 768px) {
+    /* Add more bottom margin to hero subtitle to prevent overlap with portrait section */
+    .workshop-hero-subtitle {
+      margin-bottom: 2rem !important;
+    }
+
+    /* Reduce portrait container padding on mobile to prevent badges from extending too far */
+    .workshop-portrait-container {
+      padding: 30px 20px !important;
+    }
+
+    /* Adjust badge positioning on mobile to prevent overlap */
+    .workshop-badge-top-center {
+      top: -5% !important;
+    }
+
+    .workshop-badge-top-right {
+      top: 2% !important;
+      right: -8% !important;
+    }
+
+    .workshop-badge-right-center {
+      top: 30% !important;
+      right: -10% !important;
+    }
+
+    .workshop-badge-bottom-right {
+      bottom: 12% !important;
+      right: -3% !important;
+    }
+
+    .workshop-badge-bottom-left {
+      bottom: 12% !important;
+      left: -3% !important;
+    }
+
+    .workshop-badge-left-center {
+      top: 30% !important;
+      left: -10% !important;
+    }
+
+    .workshop-badge-top-left {
+      top: 2% !important;
+      left: -8% !important;
+    }
+
+    /* Scale down badge text on mobile */
+    .workshop-badge {
+      font-size: 0.875rem !important;
+    }
+
+    .workshop-badge-value {
+      font-size: 1rem !important;
+    }
+
+    .workshop-badge-label {
+      font-size: 0.625rem !important;
+    }
+  }
+
+  /* Extra small mobile devices */
+  @media (max-width: 375px) {
+    .workshop-portrait-container {
+      padding: 25px 15px !important;
+    }
+
+    /* Further reduce badge extension on very small screens */
+    .workshop-badge-top-right,
+    .workshop-badge-top-left {
+      top: 3% !important;
+    }
+
+    .workshop-badge-right-center {
+      right: -8% !important;
+    }
+
+    .workshop-badge-left-center {
+      left: -8% !important;
+    }
+  }
+
+  /* Tablet devices (769px - 1023px) */
+  @media (min-width: 769px) and (max-width: 1023px) {
+    /* Add more bottom margin to hero subtitle on tablet */
+    .workshop-hero-subtitle {
+      margin-bottom: 3rem !important;
+    }
+
+    /* Adjust portrait container padding for tablet */
+    .workshop-portrait-container {
+      padding: 40px 30px !important;
+    }
+
+    /* Adjust badge positioning on tablet to prevent overlap */
+    .workshop-badge-top-center {
+      top: -6% !important;
+    }
+
+    .workshop-badge-top-right {
+      top: 3% !important;
+      right: -9% !important;
+    }
+
+    .workshop-badge-right-center {
+      top: 32% !important;
+      right: -11% !important;
+    }
+
+    .workshop-badge-bottom-right {
+      bottom: 13% !important;
+      right: -4% !important;
+    }
+
+    .workshop-badge-bottom-left {
+      bottom: 13% !important;
+      left: -4% !important;
+    }
+
+    .workshop-badge-left-center {
+      top: 32% !important;
+      left: -11% !important;
+    }
+
+    .workshop-badge-top-left {
+      top: 3% !important;
+      left: -9% !important;
+    }
+
+    /* Slightly smaller badge text on tablet */
+    .workshop-badge-value {
+      font-size: 1.125rem !important;
+    }
+
+    .workshop-badge-label {
+      font-size: 0.75rem !important;
+    }
+  }
+
+  /* ============================================
+     END Workshop Page Mobile Fixes
+     ============================================ */
 }
