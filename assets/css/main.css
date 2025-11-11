@@ -580,11 +580,12 @@
     /* Reduce portrait container padding on mobile to prevent badges from extending too far */
     .workshop-portrait-container {
       padding: 30px 20px !important;
+      padding-top: 50px !important; /* Extra top padding for the top badge */
     }
 
     /* Adjust badge positioning on mobile to prevent overlap */
     .workshop-badge-top-center {
-      top: -5% !important;
+      top: -3% !important;
     }
 
     .workshop-badge-top-right {
@@ -662,11 +663,12 @@
     /* Adjust portrait container padding for tablet */
     .workshop-portrait-container {
       padding: 40px 30px !important;
+      padding-top: 60px !important; /* Extra top padding for the top badge */
     }
 
     /* Adjust badge positioning on tablet to prevent overlap */
     .workshop-badge-top-center {
-      top: -6% !important;
+      top: -4% !important;
     }
 
     .workshop-badge-top-right {
