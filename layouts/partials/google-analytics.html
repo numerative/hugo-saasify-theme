@@ -8,25 +8,6 @@
   gtag('config', '{{ .Site.Params.googleAnalytics }}');
 
   /**
-   * Helper function to track lead generation
-   * @param {Object} data - Lead data
-   * @param {string} data.source - Lead source (e.g., 'webinar_banner', 'homepage_form')
-   * @param {string} data.event_name - Event/webinar name
-   * @param {string} data.event_date - Event date
-   * @param {string} data.category - Lead category (e.g., 'webinar', 'course', 'consultation')
-   */
-  window.trackLead = function(data) {
-    if (typeof gtag === 'undefined') return;
-
-    gtag('event', 'generate_lead', {
-      lead_source: data.source || 'unknown',
-      event_name: data.event_name || '',
-      event_date: data.event_date || '',
-      lead_category: data.category || 'webinar'
-    });
-  };
-
-  /**
    * Helper function to track purchase/conversion
    * @param {Object} data - Purchase data
    * @param {string} data.transaction_id - Unique transaction ID
